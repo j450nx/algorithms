@@ -46,3 +46,20 @@ function smallestPositiveInteger(array) {
 }
 
 console.log(smallestPositiveInteger([1, -3, 6, 4, 1, 2]));
+
+function reverseWords(str) {
+  let reverseWordArr = str.split(" ").map(word => word.split("").reverse().join(""));
+  return reverseWordArr.join(" ");
+}
+
+console.log(reverseWords('The quick brown fox jumps over the lazy dog.'));
+
+function reverse(str){  
+  let reversed = "";      
+   for (var i = str.length - 1; i >= 0; i--){         
+     reversed += str[i];  
+   }     
+  return reversed;
+}
+
+console.log(reverse('The quick brown fox jumps over the lazy dog.'));
