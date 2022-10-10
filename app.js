@@ -94,3 +94,38 @@ console.log(searchArray(array, 'blue'));
 console.log(hashMap['cyan']);
 console.log(hashMap['blue']);
 
+const twoSum = (array, sum) => {
+    const hashtable = {};
+    
+    for (let i = 0; i < array.length; i++) {
+        hashtable[array[i]] = i;   
+    }
+    
+    for (let i= 0; i < array.length; i++) {
+        let target = sum - array[i];
+        return [i, hashtable[target]];
+    }
+     
+    return null;
+}
+
+console.log(twoSum([5, 5, 6, 7], 10));
+
+
+const twoSum2 = (array, sum) => {
+    const hashtable = {};
+    
+    for (let i = 0; i < array.length; i++) {
+        let target = sum - array[i];
+       
+        if (hashtable.hasOwnProperty(target)){
+            return [hashtable[target], i];
+        }
+        
+        hashtable[array[i]] = i;   
+    }
+     
+    return null;
+}
+
+console.log(twoSum2([34, 23, 35, 24, 2, 7, 11], 47));
