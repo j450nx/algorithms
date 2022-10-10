@@ -63,3 +63,34 @@ function reverse(str){
 }
 
 console.log(reverse('The quick brown fox jumps over the lazy dog.'));
+
+
+//Example to show an array has an O(n) while a hashmap has O(1)
+let array = [
+    ['black', '#000000'],
+    ['pink', '#ff69b4'],
+    ['cyan', '00ffff']
+    ];
+
+let hashMap = {
+    black: '#000000',
+    pink: '#ff69b4',
+    cyan: '#00ffff'
+}
+
+const searchArray = (arr, color) => {
+    for (let i = 0; i < arr.length; i++) {
+        console.log(arr[i]);
+        if (arr[i][0] === color) {
+            return arr[i][1];
+        }
+    }
+    return `The color: ${color} is not stored in this array`;
+}
+
+console.log(searchArray(array, 'cyan'));
+console.log(searchArray(array, 'blue'));
+
+console.log(hashMap['cyan']);
+console.log(hashMap['blue']);
+
