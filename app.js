@@ -12,21 +12,27 @@ console.log(isPalidrome('1234444=5321'));
 
 
 function binaryGap(num) {
-    var binStr = num.toString(2),
-        currentMax,
-        finalMax = 0;
+    if (num === parseInt(num, 10) && num >=1 && num <= 2147483647){
+        var binStr = num.toString(2),
+            currentMax,
+            finalMax = 0;
+            
+        console.log(binStr);
     
-    for (let i = 0; i < binStr.length; i++) {
-        currentMax = 0;
-        while (binStr[i] === '0') {
-            ++currentMax && ++i;
+        for (let i = 0; i < binStr.length; i++) {
+            currentMax = 0;
+            while (binStr[i] === '0') {
+                ++currentMax && i++;
+            }
+            finalMax = Math.max(currentMax, finalMax);
         }
-        finalMax = Math.max(currentMax, finalMax);
+        return finalMax;
     }
-    return finalMax;
+    return 0;
 }
 
-console.log(`Largest binary gap: ${binaryGap(10141)}`);
+console.log(`Largest binary gap: ${binaryGap(529)}`);
+console.log(`Largest binary gap: ${binaryGap(2147483647)}`);
 
 function smallestPositiveInteger(array) {
     let resultArray = [];
