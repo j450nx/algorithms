@@ -189,3 +189,13 @@ console.log(lookUpProfile("Bob", "number"));
 console.log(lookUpProfile("Bob", "potato"));
 console.log(lookUpProfile("Akira", "address"));
 
+//random range between myMin and myMax inclusive
+function randomRange(myMin, myMax) {
+  // Only change code below this line
+  return (Math.floor(Math.random() * (myMax - myMin + 1)) + myMin);
+  // Only change code above this line
+}
+
+console.log(randomRange(1, 10));
+console.log(randomRange(5, 10));
+console.log(randomRange(9, 10));
