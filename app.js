@@ -199,3 +199,32 @@ function randomRange(myMin, myMax) {
 console.log(randomRange(1, 10));
 console.log(randomRange(5, 10));
 console.log(randomRange(9, 10));
+
+//Check object values with Object.values() and Array.prototype.join()
+const initialPayload = {
+    media: {
+        id: 1,
+        season: 1,
+        name: 'Show One'
+    }    
+}
+
+const expectedPayload = {
+    media: {
+        id: 1,
+        season: '1',
+        showName: 'Show One'
+    }
+}
+
+function checkValues(payload) {
+    const initialJoin = Object.values(payload['media']).join();
+    const expectedJoin = Object.values(expectedPayload['media']).join();
+    
+    if (initialJoin == expectedJoin) {
+        return true;
+    }
+    return false;   
+}
+
+console.log(checkValues(initialPayload));
