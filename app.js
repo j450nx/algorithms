@@ -572,3 +572,6 @@ const new_s = s.myMap(function(item) {
 });
 
 console.log(new_s);
+
+//Array.prototype.filter, Array.prototype.filter and destructuring to find the title and rating for all movies with at least 8.0 imdb rating
+const filteredList = watchList.filter(movie => movie.imdbRating >= 8.0).map(({ Title: title, imdbRating: rating }) => ({ title, rating }));
