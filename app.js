@@ -550,3 +550,25 @@ function chunkArrayInGroups(arr, size) {
 
 console.log(chunkArrayInGroups(["a", "b", "c", "d"], 2));
 console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3));
+
+// Array.prototype.forEach
+// The global variable
+const s = [23, 65, 98, 5];
+
+Array.prototype.myMap = function(callback) {
+  const newArray = [];
+  // Only change code below this line
+    for (let i = 0; i < this.length; i++) {
+        newArray.push(callback(this[i]));
+    }
+    
+    this.forEach(a => newArray.push(callback(a)));
+  // Only change code above this line
+  return newArray;
+};
+
+const new_s = s.myMap(function(item) {
+  return item * 2;
+});
+
+console.log(new_s);
