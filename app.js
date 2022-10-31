@@ -557,11 +557,12 @@ const s = [23, 65, 98, 5];
 
 Array.prototype.myMap = function(callback) {
   const newArray = [];
-  // Only change code below this line
+  // solution with for loop
     for (let i = 0; i < this.length; i++) {
         newArray.push(callback(this[i]));
     }
-    
+
+    // solution with forEach
     this.forEach(a => newArray.push(callback(a)));
   // Only change code above this line
   return newArray;
@@ -572,6 +573,30 @@ const new_s = s.myMap(function(item) {
 });
 
 console.log(new_s);
+
+const t = [23, 65, 98, 5];
+
+Array.prototype.myFilter = function(callback) {
+    // Only change code below this line
+    const newArray = [];
+    // solution with a for loop
+    for (let i = 0; i < this.length; i++) {
+        if (callback(this[i]) === true) {
+            newArray.push(this[i]);
+        }
+    }
+
+    // solution with forEach
+    this.forEach(a => callback(a) === true ? newArray.push(a) : '');
+    // Only change code above this line
+    return newArray;
+  };
+  
+  const new_t = t.myFilter(function(item) {
+    return item % 2 === 1;
+  });
+
+  console.log(new_t);
 
 //Array.prototype.filter, Array.prototype.filter and destructuring to find the title and rating for all movies with at least 8.0 imdb rating
 const filteredList = watchList.filter(movie => movie.imdbRating >= 8.0).map(({ Title: title, imdbRating: rating }) => ({ title, rating }));
