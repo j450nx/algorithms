@@ -1,0 +1,140 @@
+show session variables like '%isolation%';
+set session transaction isolation level read committed;
+set session transaction isolation level read uncommitted;
+set session transaction isolation level repeatable read;
+set session transaction isolation level serializable;
+
+show variables like '%autocommit%';
+set autocommit=0;
+
+lock table table_name write;
+unlock tables;
+select * from performance_schema.data_locks;
+
+****hidden index****
+SELECT t.NAME
+FROM INFORMATION_SCHEMA.INNODB_TABLES t, INFORMATION_SCHEMA.INNODB_INDEXES i
+WHERE t.table_id = i.table_id
+AND i.NAME = 'GEN_CLUST_INDEX';
+
+ADD CONSTRAINT PRODUCTS_ISBN UNIQUE (ISBN);
+
+SHOW INDEXES FROM table_name;
+CREATE INDEX IDX_NAME ON PRODUCTS_1 (PRODUCT_NAME);
+CREATE INDEX IDX_NAME_ISBN ON PRODUCTS_1 (PRODUCT_NAME, ISBN);
+
+EXPLAIN FORMAT=JSON SELECT * FROM PRODUCTS_1 WHERE PRODUCT_NAME = 'book1' \G;
+EXPLAIN FORMAT=JSON SELECT * FROM PRODUCTS_1 USE INDEX (IDX_NAME_ISBN) WHERE PRODUCT_NAME = 'book1' \G;
+
+--NESTED
+-- Find names of all employees who have sold over 30,000 to a single client
+SELECT employee.first_name, employee.last_name
+FROM employee
+WHERE employee.emp_id IN (
+    SELECT works_with.emp_id
+    FROM works_with
+    WHERE works_with.total_sales > 30000
+);
+
+-- Find all clients who are handled by the branch that Michael Scotts
+-- manages. Assume you know Michael's ID
+SELECT client.client_name
+FROM client
+WHERE client.branch_id = (
+    SELECT branch.branch_id
+    FROM branch
+    WHERE branch.mgr_id = 102
+    LIMIT 1
+);
+
+DELETE FROM employee
+WHERE emp_id = 102;
+
+SELECT * FROM employee;
+
+--Set this before dropping tables
+SET FOREIGN_KEY_CHECKS = 0;
+
+--TRIGGERS--
+
+CREATE TABLE trigger_test (
+    message VARCHAR(100)
+);
+
+-- Execute in terminal
+DELIMITER $$
+
+CREATE
+    TRIGGER my_trigger BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+        INSERT INTO trigger_test VALUES('Added new employee');
+    END$$
+
+DELIMITER ;
+
+INSERT INTO employee
+VALUES(109, 'Oscar', 'Martinez', '1968-02-19', 'M', 69000, 106, 3);
+
+SELECT * FROM trigger_test;
+
+-- Execute in terminal
+DELIMITER $$
+
+CREATE
+    TRIGGER my_trigger1 BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+        INSERT INTO trigger_test VALUES(NEW.first_name);
+    END$$
+
+DELIMITER ;
+
+INSERT INTO employee
+VALUES(110, 'Kevin', 'Malone', '1978-02-19', 'M', 69000, 106, 3);
+
+SELECT * FROM trigger_test;
+
+-- Execute in terminal
+DELIMITER $$
+
+CREATE
+    TRIGGER my_trigger2 BEFORE INSERT --AFTER DELETE
+    ON employee
+    FOR EACH ROW BEGIN
+        IF New.sex = 'M' THEN
+            INSERT INTO trigger_test VALUES('Added male employee');
+        ELSEIF NEW.sex = 'F' THEN
+            INSERT INTO trigger_test VALUES('Added female employee');
+        ELSE
+            INSERT INTO trigger_test VALUES('Added other employee');
+        END IF;
+    END$$
+
+DELIMITER ;
+
+INSERT INTO employee
+VALUES(111, 'Pam', 'Beesly', '1988-02-19', 'F', 69000, 106, 3);
+
+SELECT * FROM trigger_test;
+
+DROP TRIGGER my_trigger;
+DROP TRIGGER my_trigger1;
+DROP TRIGGER my_trigger2;
+
+-- ER Diagram Intro
+/*
+Entity(rectangle) - something we want to model on
+attributes (oval)
+primary key
+composite attribute (has more attributes)
+multivalue attribute (double oval)
+derrived attribute (dotted oval)
+relationship (diamond)
+single line = partial participation
+double line = total participlation
+Relationship Cardinality: 1:1, 1:N, N:M
+weak entity(double rectangle) (cannot be uniquely identified by its attributes alone)
+    and will have total participation
+Identifying relationship (double diamond)
+*/
