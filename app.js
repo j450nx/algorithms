@@ -598,5 +598,73 @@ Array.prototype.myFilter = function(callback) {
 
   console.log(new_t);
 
-//Array.prototype.filter, Array.prototype.filter and destructuring to find the title and rating for all movies with at least 8.0 imdb rating
+// Array.prototype.filter, Array.prototype.filter and destructuring to find the title and rating for all movies with at least 8.0 imdb rating
 const filteredList = watchList.filter(movie => movie.imdbRating >= 8.0).map(({ Title: title, imdbRating: rating }) => ({ title, rating }));
+
+// use filter and reduce to find the average imdbRating for movies directed by 'Christopher Nolan'
+function getRating(watchList) {
+    let totalMovies, ratings, averageRating;
+    totalMovies = watchList.filter(movie => movie.Director === 'Christopher Nolan');
+    // use .map to convert strings into numers
+    ratings = totalMovies.map(movie => Number(movie.imdbRating))
+    averageRating = ratings.reduce((sum, rating) => (sum + rating)) / totalMovies.length;
+    return averageRating;
+  }
+
+// use reduce and destruturing to do the same thing
+function getRating(watchList) {
+    const movies = watchList
+        .reduce((movie, { Director: director, imdbRating: rating }) => {
+            if (director === 'Christopher Nolan') {
+                movie.count++;
+                movie.sum += Number(rating);
+            }
+            return movie;
+        }, { sum: 0, count: 0 });
+    const averageRating = movies.sum / movies.count;
+    return averageRating;
+}
+
+// return squares of only possive integers
+const squareList = arr => {
+    return (arr.filter(num => num > 0)
+        .filter(num => Number.isInteger(num))
+        .map(num => num * num));
+};
+const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
+console.log(squaredIntegers);
+
+// use sort
+function alphabeticalOrder(arr) {
+    return arr.sort(function(a, b) {
+    // arrow function: return arr.sort((a, b) => a === b ? 0 : a < b ? -1 : 1);
+      return a === b ? 0 : a < b ? -1 : 1;
+    });
+  } 
+console.log(alphabeticalOrder(["a", "d", "c", "a", "z", "g"]));
+
+// use sort without mutating original arr
+const globalArray = [5, 6, 3, 2, 9];
+function nonMutatingSort(arr) {
+  const result = arr.slice();
+  return result.sort((a, b) => a === b ? 0 : a < b ? -1 : 1);
+}
+console.log(nonMutatingSort(globalArray));
+
+// use of /\W/ : /[^A-Za-z0-9_]/
+function splitify(str) {
+    return str.split(/\W/);
+}
+console.log(splitify("Hello World,I-am code"));
+
+// use of /\s+/ : replaces any whitespaces with ''
+function urlSlug(title) {
+    return title.trim().toLowerCase().split(/\s+/).join('-');
+}
+console.log(urlSlug(" Winter Is     Coming  "));
+
+// user .every method to check if all values are positive
+function checkPositive(arr) {
+    return arr.every((value) => value > 0 ? true : false);
+}
+console.log(checkPositive([1, 2, 3, -4, 5]));
