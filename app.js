@@ -605,7 +605,7 @@ const filteredList = watchList.filter(movie => movie.imdbRating >= 8.0).map(({ T
 function getRating(watchList) {
     let totalMovies, ratings, averageRating;
     totalMovies = watchList.filter(movie => movie.Director === 'Christopher Nolan');
-    // use .map to convert strings into numers
+    // use .map to convert strings into numbers
     ratings = totalMovies.map(movie => Number(movie.imdbRating))
     averageRating = ratings.reduce((sum, rating) => (sum + rating)) / totalMovies.length;
     return averageRating;
@@ -770,3 +770,52 @@ function myReplace(str, before, after) {
 }
 console.log(myReplace("A quick brown fox Jumped over the lazy dog", "Jumped", "leaped"));
 console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "Leaped"));
+
+//https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/dna-pairing
+/*
+Pairs of DNA strands consist of nucleobase pairs. Base pairs are represented by the characters AT and CG, which form building blocks of the DNA double helix.
+
+The DNA strand is missing the pairing element. Write a function to match the missing base pairs for the provided DNA strand. For each character in the provided string, find the base pair character. Return the results as a 2d array.
+
+For example, for the input GCG, return [["G", "C"], ["C","G"], ["G", "C"]]
+
+The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
+*/
+function pairElement(str) {
+    //create object for pair lookup
+    var pairs = {
+      A: "T",
+      T: "A",
+      C: "G",
+      G: "C"
+    };
+    //split string into array of characters
+    var arr = str.split("");
+    //map character to array of character and matching pair
+    return arr.map(x => [x, pairs[x]]);
+}
+console.log(pairElement("AATGCG"));
+
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/missing-letters
+/*
+Find the missing letter in the passed letter range and return it.
+
+If all letters are present in the range, return undefined.
+*/
+function fearNotLetter(str) {
+    let currCharCode = str.charCodeAt(0);
+    let missing;
+    
+    str.split("")
+    .forEach(letter => {
+        if (letter.charCodeAt(0) === currCharCode) {
+            currCharCode++;
+        } else {
+            missing = String.fromCharCode(currCharCode);
+        }
+    });
+    return missing;
+}
+
+console.log(fearNotLetter("acde"));
+console.log(fearNotLetter("stvwx"));
