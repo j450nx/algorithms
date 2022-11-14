@@ -819,3 +819,111 @@ function fearNotLetter(str) {
 
 console.log(fearNotLetter("acde"));
 console.log(fearNotLetter("stvwx"));
+
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sorted-union
+/*
+Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+
+The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+
+Check the assertion tests for examples.
+*/
+// rest parameter
+function uniteUnique(...arr) {
+    const result = [];
+    // use of arguments object
+    for (let i = 0; i < arguments.length; i++) {
+        for (let j = 0; j < arguments[i].length; j++) {
+            if (result.indexOf(arguments[i][j]) < 0) {
+                result.push(arguments[i][j]);
+            }
+        }
+    }
+    // with forEach
+    arr.forEach(subArr => subArr.forEach(a => {
+        if(result.indexOf(a) < 0) {
+            result.push(a);
+        }
+    }));
+    return result; // sorted: return result.sort((a, b) => a - b);
+}
+
+console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
+console.log(uniteUnique([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]));
+
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/convert-html-entities
+/*
+Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+*/
+function convertHTML(str) {
+    const pairs = {
+        '&' : '&amp;',
+        '<' : '&lt;',
+        '>' : '&gt;',
+        '\"' : '&quot;',
+        '\'' : '&apos;'
+    }
+    // split str into an array use .map and || to value if key is available?
+    return str.split('').map(a => pairs[a] || a).join('');
+    // replace the found regex with the key-value pairs
+    // return str.replace(/([&<>\"'])/g, a => pairs[a]);
+}
+
+console.log(convertHTML("Dolce & Gabbana"));
+console.log(convertHTML("Hamburgers < Pizza < Tacos"));
+console.log(convertHTML('Stuff in "quotation marks"'));
+
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sum-all-odd-fibonacci-numbers
+/*
+Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers. The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+
+For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
+*/
+function sumFibs(num) {
+    let n1 = 0, n2 = 1, nextTerm, arr = [];
+    for (let i = 1; i <= num; i++) {
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm;
+        if (n1 % 2 === 1 && n1 <= num) {
+            arr.push(n1);
+        }
+    } 
+    return arr.reduce((a, b) => a + b, 0);
+}
+
+console.log(sumFibs(10));
+console.log(sumFibs(75025));
+
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sum-all-primes
+/*
+A prime number is a whole number greater than 1 with exactly two divisors: 1 and itself. For example, 2 is a prime number because it is only divisible by 1 and 2. In contrast, 4 is not prime since it is divisible by 1, 2 and 4.
+
+Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
+*/
+function sumPrimes(num) {
+    // Helper function to check primality
+    function isPrime(num) {
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0)
+          return false;
+      }
+      return true;
+    }
+  
+    // Check all numbers for primality
+    let sum = 0;
+    for (let i = 2; i <= num; i++) {
+      if (isPrime(i))
+        sum += i;
+    }
+    return sum;
+}
+  
+console.log(sumPrimes(4));
+console.log(sumPrimes(10));
+console.log(sumPrimes(977));
