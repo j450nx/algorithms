@@ -927,3 +927,114 @@ function sumPrimes(num) {
 console.log(sumPrimes(4));
 console.log(sumPrimes(10));
 console.log(sumPrimes(977));
+
+// https://www.samanthaming.com/tidbits/97-string-padstart-padend/
+/*
+string.padStart(<maxLength>, <padString>)
+
+string.padEnd(<maxLength>, <padString>)
+*/
+const string97 = 'hi';
+string97.padStart(3, 'c'); // chi
+string97.padEnd(4, 'l'); // hill
+
+'hi'.padStart(5);
+// Same as
+'hi'.padStart(5, ' ');
+
+'SAM'.padStart(10, undefined); // '       SAM'
+'hi'.padStart(7, 'SAMANTHA'); // SAMANhi
+'hi'.padEnd(7, 'SAMANTHA'); // hiSAMAN
+
+console.log('JavaScript'.padStart(15)); 
+console.log('HTML'.padStart(15));
+console.log('CSS'.padStart(15));
+console.log('Vue'.padStart(15));
+
+// outputs
+/*
+     JavaScript
+           HTML
+            CSS
+            Vue
+*/
+
+// Receipt formatting
+const purchase = [
+    ['Masks', '9.99'],
+    ['Shirt', '20.00'],
+    ['Jacket', '200.00'],
+    ['Gloves', '10.00'],
+];
+  
+purchase.forEach(([item, price]) => {
+    console.log(item + price.padStart(20 - item.length));
+});
+
+// outputs
+/*
+Masks           9.99
+Shirt          20.00
+Jacket        200.00
+Gloves         10.00
+*/
+
+// Masking numbers
+const bankNumber = '2222 2222 2222 2222';
+const last4Digits = bankNumber.slice(-4);
+
+last4Digits.padStart(bankNumber.length, '*'); // ***************2222
+
+// https://www.samanthaming.com/tidbits/85-string-trim
+const string85 = "   hi   ";
+
+string85.trimStart(); // "hi   "
+string85.trimEnd();   // "   hi"
+string85.trim();      // "hi"
+string85;             // "   hi   "
+
+'hi \n'.trim(); // "hi"
+
+'hi \t'.trim(); // "hi"
+
+'hi \r'.trim(); // "hi"
+
+const multiLine = `
+hi
+
+
+`;
+
+multiLine.trim(); // "hi"
+
+'  hi there  '.trim(); // "hi there"
+
+const multiLine85 = `
+hi
+
+there
+
+
+`;
+
+/* Returns
+
+"hi
+
+there"
+*/
+
+const string85_2 = "   hi   ";
+string85_2.trimStart(); // "hi   "
+
+const string85_3 = "   hi   ";
+string85_3.trimEnd();   // "   hi"
+
+const uglySentence = "One  Two   Three Four   ";
+
+const prettySentence = uglySentence
+    .split(' ') // ["One", "", "Two", "", "", "Three", "Four", "", "", ""]
+    .filter(word => word) // ["One", "Two", "Three", "Four"]
+    .join(' '); // "One Two Three Four"
+
+console.log(prettySentence); // "One Two Three Four"
